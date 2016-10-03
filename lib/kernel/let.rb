@@ -1,3 +1,5 @@
+require_relative 'let/version'
+
 module Kernel
   def let(**context, &block)
     if block_given?
