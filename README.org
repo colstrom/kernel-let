@@ -1,0 +1,55 @@
+#+TITLE: Kernel#let
+#+LATEX: \pagebreak
+
+* Overview
+
+=kernel-let= is a single-method gem that monkey patches a clean =let= method
+onto =Kernel=, providing Scheme-style variable binding in Ruby.
+
+* Why does this exist?
+
+Monkey patching is a good thing, when used responsibly. Using something
+responsibly is easier when we choose when to use it. Having this method as a
+standalone gem makes that choice easier.
+
+* Installation
+
+#+BEGIN_SRC shell
+  gem install kernel-let
+#+END_SRC
+
+* Usage
+
+First, we need to require it.
+
+#+BEGIN_SRC ruby
+  require 'kernel/let'
+#+END_SRC
+
+~let~ takes any number of names and values, and a block. Within the block, the
+values are bound to the given name.
+
+#+BEGIN_SRC ruby
+  let(foo: 'bar', bar: 'baz') { foo + bar } # => "barbaz"
+
+  let foo: 'bar', bar: 'baz' do
+    foo + bar
+  end # => "barbaz"
+#+END_SRC
+
+If no block was given, ~let~ will return a Proc which will evaluate a block in
+the context it was created with.
+
+#+BEGIN_SRC ruby
+  context = let foo: 'bar', bar: 'baz'
+  context.call { foo } # => "barbaz"
+  context.() { foo } # => "barbaz"
+#+END_SRC
+
+* License
+
+  ~kernel-let~ is available under the [[https://tldrlegal.com/license/mit-license][MIT License]]. See ~LICENSE.txt~ for the full text.
+
+* Contributors
+  - Arnau Sanchez
+  - [[https://colstrom.github.io/][Chris Olstrom]] | [[mailto:chris@olstrom.com][e-mail]] | [[https://twitter.com/ChrisOlstrom][Twitter]]
