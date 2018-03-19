@@ -1,5 +1,10 @@
 module Kernel
   module Let
-    VERSION = '1.0.0'.freeze
+    VERSION = $LOADED_FEATURES
+                .map { |f| f.match %r{/kernel-let-(?<version>[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+(\.pre)?)} }
+                .compact
+                .map { |gem| gem['version'] }
+                .uniq
+                .first
   end
 end
